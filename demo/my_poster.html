@@ -1,0 +1,691 @@
+<!-- https://getbootstrap.com/docs/4.0/components/card/#card-columns -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>首頁</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+
+    <!-- =====test start===== -->
+    <style>
+        /* =====img hover start===== */
+
+
+        .card-body{
+            background-color: #696969;
+            color: white;
+        }
+
+
+        .container>.card-{
+            background:  #778899;
+        }
+
+
+        .hover {
+            overflow: hidden;
+            position: relative;
+            /* padding-bottom: 60%; */
+            padding-bottom: 120%;
+        }
+
+        .hover-overlay {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 90;
+            transition: all 0.4s;
+        }
+
+        .hover img {
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: all 0.3s;
+        }
+
+        .hover-content {
+            position: relative;
+            z-index: 99;
+        }
+
+
+
+        .hover-2 .hover-overlay {
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.1));
+        }
+
+        .hover-2-title {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            text-align: center;
+            width: 100%;
+            z-index: 99;
+            transition: all 0.3s;
+        }
+
+        .hover-2-description {
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            opacity: 0;
+            left: 0;
+            text-align: center;
+            z-index: 99;
+            transition: all 0.3s;
+        }
+
+        .hover-2:hover .hover-2-title {
+            transform: translateY(-1.5rem);
+        }
+
+        .hover-2:hover .hover-2-description {
+            bottom: 0.5rem;
+            opacity: 1;
+        }
+
+        .hover-2:hover .hover-overlay {
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.1));
+        }
+
+        /* =====img hover end===== */
+
+        .m_filter {
+            text-align: center;
+        }
+
+        .poster {
+            /* position: absolute;
+            top: 0;
+            left: 0;
+            width: 531px;
+            height: 354px;
+            background: rgba(101, 101, 101, 0.6);
+            color: #ffffff;
+            opacity: 0; */
+        }
+
+        .select-btn>a {
+            display: inline-block;
+            padding: 7px 10px;
+            border: solid 1px #333;
+            color: #333;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            text-decoration: none;
+        }
+
+        .select-btn>a:hover {
+            background: #333;
+            color: #fff;
+        }
+
+        #combo>div {
+            overflow: hidden;
+            /* margin-bottom: 10px;
+            padding-left: 5px;
+            padding-right: 5px; */
+        }
+
+        .ds {
+            -lifekit-transform: scale(0);
+            transform: scale(0);
+            -lifekit-transition: all 350ms ease;
+            transition: all 350ms ease;
+        }
+
+        .scale {
+            transform: scale(1);
+        }
+    </style>
+
+    <script>
+        $(function () {
+            $('.ds').addClass('all').addClass('scale');
+            $('#combo img').addClass('img - responsive');
+            var selectedClass = "";
+            $(".select-btn>a").click(function () {
+                selectedClass = $(this).attr("data-rel");
+                $("#combo").fadeTo(100, 0.1);
+                $("#combo div").not("." + selectedClass).fadeOut().removeClass('scale');
+                setTimeout(function () {
+                    $("." + selectedClass).fadeIn().addClass('scale');
+                    $("#combo").fadeTo(300, 1);
+                }, 300);
+                return false;
+            });
+        });
+    </script>
+    <!-- =====test end===== -->
+
+</head>
+
+<body>
+
+
+    <!-- nav start -->
+
+    <!-- .navbar-expand-{sm|md|lg|xl}決定在哪個斷點以上就出現漢堡式選單 -->
+    <!-- navbar-dark 文字顏色 .bg-dark 背景顏色 -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+        <a class="navbar-brand" href="index.html">
+            <!-- <img src="images/H-logo.svg" width="30" height="30" class="d-inline-block align-top" alt=""> -->
+            <span class="h3 mx-1">Popcorn Field</span>
+        </a>
+        <!-- .navbar-toggler 漢堡式選單按鈕 -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <!-- .navbar-toggler-icon 漢堡式選單Icon -->
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- .collapse.navbar-collapse 用於外層中斷點群組和隱藏導覽列內容 -->
+        <!-- 選單項目&漢堡式折疊選單 -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <!-- active表示當前頁面 -->
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">首頁<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">關於我們</a>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">電影類別</a>
+
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="#">上映中</a>
+                        <a class="dropdown-item" href="#">即將上映</a>
+                        <a class="dropdown-item" href="#">劇情</a>
+                        <a class="dropdown-item" href="#">動畫</a>
+                        <a class="dropdown-item" href="#">Cult Film</a>
+                    </div>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search
+                </button>
+            </form>
+        </div>
+    </nav>
+
+    <!-- nav end -->
+
+
+
+    <!-- =====filter start===== -->
+
+    <div class="m_filter container">
+        <div class="select-btn">
+            <a href="#" data-rel="all">全部</a>
+            <a href="#" data-rel="drama">劇情</a>
+            <a href="#" data-rel="tvs">影集</a>
+            <a href="#" data-rel="animate">動畫</a>
+            <a href="#" data-rel="soon">即將上映</a>
+            <a href="#" data-rel="jap">日本</a>
+            <a href="#" data-rel="news">新聞</a>
+        </div>
+    </div>
+
+    <!-- =====filter end===== -->
+    <div class="container">
+        <div class="card-columns">
+
+
+
+            <!-- =====test start===== -->
+
+            <!-- <div class="card poster" id="combo">
+                <div class="card-img ds screening">
+                    <img src="http://via.placeholder.com/400x650/FF1493/ffffff?text=Card+4" alt="animal" />
+                </div>
+            </div> -->
+
+            <!-- =====test end===== -->
+
+
+
+            <!-- =====card start===== -->
+
+            <!-- <div class="card">
+                <img class="card-img-top" src="http://via.placeholder.com/1600x900/483D8B/ffffff?text=Card+1"
+                    alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Card title that wraps to a new line</h5>
+                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                        additional
+                        content. This content is a little bit longer.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <img class="card-img-top" src="http://via.placeholder.com/1600x450/9400D3/ffffff?text=Card+2"
+                    alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">This card has supporting text below as a natural lead-in to additional content.
+                    </p>
+                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+            </div>
+
+            <div class="card">
+                <img class="card-img" src="http://via.placeholder.com/1600x1600/FF1493/ffffff?text=Card+3"
+                    alt="Card image">
+            </div> -->
+
+            <!-- =====card end===== -->
+
+
+            <div class="card poster" id="combo">
+                <div class="ds hover hover-2 text-white rounded">
+
+                    <img class="card-img hover hover-2 text-white rounded" src="../pic/poster/2001_a_s_o.jpg"
+                        alt="2001: A Space Odyssey">
+                    <div class="hover-overlay"></div>
+                    <div class="hover-2-content px-5 py-4">
+                        <h3 class="hover-2-title text-uppercase font-weight-bold mb-0">
+                            <span class="font-weight-light"></span>2001: A Space Odyssey
+                        </h3>
+                        <p class="hover-2-description mb-0"><i>Stanley Kubrick</i>
+                            <br><i>(1968)</i>
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="card poster" id="combo">
+                <div class="ds animate jap soon hover hover-2 text-white rounded">
+                    <img class="card-img" src="../pic/poster/3_godfathers.jpg" alt="3 Godfathers">
+                    <div class="hover-overlay"></div>
+                    <div class="hover-2-content px-5 py-4">
+                        <h3 class="hover-2-title text-uppercase font-weight-bold mb-0"> <span
+                                class="font-weight-light"></span>3 Godfathers</h3>
+                        <p class="hover-2-description mb-0"><i>今敏</i>
+                            <br><i>(2003)</i>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card poster shadow-lg" id="combo">
+                <div class="card-img ds news">
+                    <div class="card-body">
+                        <h5 class="card-title font-weight-bold">[新聞]《德州電鋸殺人狂》全新續集首支預告曝光</h5>
+                        <p class="card-text">將於 2022 年 2 月 18 日直接上架 Netflix。
+                        </p>
+                        <p class="card-text"><small><i>- Last updated 5 days ago</i></small></p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card poster" id="combo">
+                <div class="ds tvs drama hover hover-2 text-white rounded">
+                    <img class="card-img" src="../pic/poster/b_c_s.jpg" alt="Better Call Saull">
+                    <div class="hover-overlay"></div>
+                    <div class="hover-2-content px-5 py-4">
+                        <h3 class="hover-2-title text-uppercase font-weight-bold mb-0"> <span
+                                class="font-weight-light"></span>Better Call Saull</h3>
+                        <p class="hover-2-description mb-0"><i>Vince Gilligan, Peter Gould</i>
+                            <br><i>(2015)</i>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card poster" id="combo">
+                <div class="card-img ds hover hover-2 text-white rounded">
+                    <img class="card-img" src="../pic/poster/b_midnight.jpg" alt="Before Midnight">
+                    <div class="hover-overlay"></div>
+                    <div class="hover-2-content px-5 py-4">
+                        <h3 class="hover-2-title text-uppercase font-weight-bold mb-0"> <span
+                                class="font-weight-light"></span>Before Midnight</h3>
+                        <p class="hover-2-description mb-0"><i>Richard Linklater</i>
+                            <br><i>(2013)</i>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card poster shadow-lg" id="combo">
+                <div class="card-img ds news">
+                    <div class="card-body">
+                        <h5 class="card-title font-weight-bold">[問片] 一部開車一直逃的片</h5>
+                        <p class="card-text">應該是美國片，從中間快結束時看到的印象中就是一個男的開著一台車一直逃。應該是在跑給警察追，不太確定
+                        </p>
+                        <p class="card-text"><small><i>- Last updated 5 days ago</i></small></p>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="card poster" id="combo">
+                <div class="card-img ds hover hover-2 text-white rounded">
+                    <img class="card-img" src="../pic/poster/b_sunrise.jpg" alt="Before Sunrise">
+                    <div class="hover-overlay"></div>
+                    <div class="hover-2-content px-5 py-4">
+                        <h3 class="hover-2-title text-uppercase font-weight-bold mb-0"> <span
+                                class="font-weight-light"></span>Before Sunrise</h3>
+                        <p class="hover-2-description mb-0"><i>Richard Linklater</i>
+                            <br><i>(1995)</i>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card poster" id="combo">
+                <div class="card-img ds hover hover-2 text-white rounded">
+                    <img class="card-img" src="../pic/poster/b_sunset.jpg" alt="Card image">
+                    <div class="hover-overlay"></div>
+                    <div class="hover-2-content px-5 py-4">
+                        <h3 class="hover-2-title text-uppercase font-weight-bold mb-0"> <span
+                                class="font-weight-light"></span>Before Sunset</h3>
+                        <p class="hover-2-description mb-0"><i>Richard Linklater</i>
+                            <br><i>(2004)</i>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card poster" id="combo">
+                <div class="card-img ds hover hover-2 text-white rounded">
+                    <img class="card-img" src="../pic/poster/baby_driver.jpg" alt="Baby Driver">
+                    <div class="hover-overlay"></div>
+                    <div class="hover-2-content px-5 py-4">
+                        <h3 class="hover-2-title text-uppercase font-weight-bold mb-0"> <span
+                                class="font-weight-light"></span>Baby Driver</h3>
+                        <p class="hover-2-description mb-0"><i>Edgar Wright</i>
+                            <br><i>(2017)</i>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card poster" id="combo">
+                <div class="card-img ds drama hover hover-2 text-white rounded">
+                    <img class="card-img" src="../pic/poster/fight_club.jpg" alt="Fight Club">
+                    <div class="hover-overlay"></div>
+                    <div class="hover-2-content px-5 py-4">
+                        <h3 class="hover-2-title text-uppercase font-weight-bold mb-0">
+                            <span class="font-weight-light"></span>Fight Club
+                        </h3>
+                        <p class="hover-2-description mb-0"><i>David Fincher</i>
+                            <br><i>(1999)</i>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card poster" id="combo">
+                <div class="card-img ds jap drama hover hover-2 text-white rounded">
+                    <img class="card-img" src="../pic/poster/hana-bi.jpg" alt="HANA-BI">
+                    <div class="hover-overlay"></div>
+                    <div class="hover-2-content px-5 py-4">
+                        <h3 class="hover-2-title text-uppercase font-weight-bold mb-0"> <span
+                                class="font-weight-light"></span>HANA-BI</h3>
+                        <p class="hover-2-description mb-0"><i>北野武</i>
+                            <br><i>(1998)</i>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card poster" id="combo">
+                <div class="card-img ds tvs hover hover-2 text-white rounded">
+                    <img class="card-img" src="../pic/poster/himym.jpg" alt="How I Met Your Mother">
+                    <div class="hover-overlay"></div>
+                    <div class="hover-2-content px-5 py-4">
+                        <h4 class="hover-2-title text-uppercase font-weight-bold mb-0">
+                            <span class="font-weight-light"></span>How I Met Your Mother
+                        </h4>
+                        <p class="hover-2-description mb-0"><i>Carter Bays, Craig Thomas</i>
+                            <br><i>(2005)</i>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card poster" id="combo">
+                <div class="card-img ds drama hover hover-2 text-white rounded">
+                    <img class="card-img" src="../pic/poster/intothewild.jpg" alt="Into the Wild">
+                    <div class="hover-overlay"></div>
+                    <div class="hover-2-content px-5 py-4">
+                        <h3 class="hover-2-title text-uppercase font-weight-bold mb-0"> <span
+                                class="font-weight-light"></span>Into the Wild</h3>
+                        <p class="hover-2-description mb-0"><i>Sean Penn</i>
+                            <br><i>(2007)</i>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+            <div class="card poster" id="combo">
+                <div class="card-img ds drama hover hover-2 text-white rounded">
+                    <img class="card-img" src="../pic/poster/mirror_image.jpg" alt="Mirror Image">
+                    <div class="hover-overlay"></div>
+                    <div class="hover-2-content px-5 py-4">
+                        <h3 class="hover-2-title text-uppercase font-weight-bold mb-0"> <span
+                                class="font-weight-light"></span>Mirror Image</h3>
+                        <p class="hover-2-description mb-0"><i>蕭雅全</i>
+                            <br><i>(2000)</i>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card poster" id="combo">
+                <div class="card-img ds tvs drama hover hover-2 text-white rounded">
+                    <img class="card-img" src="../pic/poster/maniac.jpg" alt="Maniac">
+                    <div class="hover-overlay"></div>
+                    <div class="hover-2-content px-5 py-4">
+                        <h3 class="hover-2-title text-uppercase font-weight-bold mb-0"> <span
+                                class="font-weight-light"></span>Maniac</h3>
+                        <p class="hover-2-description mb-0"><i>Cary Fukunaga</i>
+                            <br><i>(2018)</i>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card poster" id="combo">
+                <div class="card-img ds drama hover hover-2 text-white rounded">
+                    <img class="card-img" src="../pic/poster/nomadland.jpg" alt="Nomadland">
+                    <div class="hover-overlay"></div>
+                    <div class="hover-2-content px-5 py-4">
+                        <h3 class="hover-2-title text-uppercase font-weight-bold mb-0"> <span
+                                class="font-weight-light"></span>Nomadland</h3>
+                        <p class="hover-2-description mb-0"><i>Chloé Zhao</i>
+                            <br><i>(2020)</i>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card poster" id="combo">
+                <div class="card-img ds jap animate drama hover hover-2 text-white rounded">
+                    <img class="card-img" src="../pic/poster/steamboy.jpg" alt="Steamboy">
+                    <div class="hover-overlay"></div>
+                    <div class="hover-2-content px-5 py-4">
+                        <h3 class="hover-2-title text-uppercase font-weight-bold mb-0">
+                            <span class="font-weight-light"></span>Steamboy
+                        </h3>
+                        <p class="hover-2-description mb-0"><i>大友克洋</i>
+                            <br><i>(2004)</i>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card poster" id="combo">
+                <div class="card-img ds soon drama hover hover-2 text-white rounded">
+                    <img class="card-img" src="../pic/poster/the_french_dispatch.jpg" alt="The French Dispatch">
+                    <div class="hover-overlay"></div>
+                    <div class="hover-2-content px-5 py-4">
+                        <h3 class="hover-2-title text-uppercase font-weight-bold mb-0"> <span
+                                class="font-weight-light"></span>The French Dispatch</h3>
+                        <p class="hover-2-description mb-0"><i>Wes Anderson</i>
+                            <br><i>(2021)</i>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card poster" id="combo">
+                <div class="card-img ds drama hover hover-2 text-white rounded">
+                    <img class="card-img" src="../pic/poster/trainspotting.jpg" alt="Trainspotting">
+                    <div class="hover-overlay"></div>
+                    <div class="hover-2-content px-5 py-4">
+                        <h3 class="hover-2-title text-uppercase font-weight-bold mb-0"> <span
+                                class="font-weight-light"></span>Trainspotting</h3>
+                        <p class="hover-2-description mb-0"><i>Danny Boyle</i>
+                            <br><i>(1996)</i>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-lg" id="combo">
+                <div class="card-img ds news">
+                    <div class="card-body">
+                        <h5 class="card-title font-weight-bold">[情報] 底特律影評人協會得獎名單</h5>
+                        <p class="card-text">最佳影片
+                        <br>《情聖西哈諾》
+                        </p>
+                        <p class="card-text">最佳導演
+                        <br>Lan-Manuel Miranda《倒數時刻》
+                        </p>
+                        <p class="card-text">最佳男主角
+                        <br>Peter Dinklage《情聖西哈諾》
+                        </p>
+                        <p class="card-text">最佳女主角
+                        <br>Jessica Chastain《神聖電視台》
+                        </p>
+                        <p class="card-text"><small><i>- Last updated 3 mins ago</i></small></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card poster" id="combo">
+                <div class="card-img ds tvs drama hover hover-2 text-white rounded">
+                    <img class="card-img" src="../pic/poster/westworld.jpg" alt="Westworld">
+                    <div class="hover-overlay"></div>
+                    <div class="hover-2-content px-5 py-4">
+                        <h3 class="hover-2-title text-uppercase font-weight-bold mb-0">
+                            <span class="font-weight-light"></span>Westworld
+                        </h3>
+                        <p class="hover-2-description mb-0"><i>Jonathan Nolan, Lisa Joy</i>
+                            <br><i>(2016)</i>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card poster" id="combo">
+                <div class="card-img ds jap animate drama hover hover-2 text-white rounded">
+                    <img class="card-img" src="../pic/poster/akira.jpg" alt="AKIRA">
+                    <div class="hover-overlay"></div>
+                    <div class="hover-2-content px-5 py-4">
+                        <h3 class="hover-2-title text-uppercase font-weight-bold mb-0"> <span
+                                class="font-weight-light"></span>AKIRA</h3>
+                        <p class="hover-2-description mb-0"><i>大友克洋</i>
+                            <br><i>(1988)</i>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card poster" id="combo">
+                <div class="card-img ds tvs drama hover hover-2 text-white rounded">
+                    <img class="card-img" src="../pic/poster/normal_people.jpg" alt="Normal People">
+                    <div class="hover-overlay"></div>
+                    <div class="hover-2-content px-5 py-4">
+                        <h3 class="hover-2-title text-uppercase font-weight-bold mb-0">
+                            <span class="font-weight-light"></span>Normal People
+                        </h3>
+                        <p class="hover-2-description mb-0"><i>Sally Rooney, Leonard Abrahamson,<br>Hettie Macdonald</i>
+                            <br><i>(2020)</i>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card poster" id="combo">
+                <div class="card-img ds hover hover-2 text-white rounded">
+                    <img class="card-img" src="../pic/poster/how_to_talk_to_girls_at_parties.jpg" alt="How to Talk to Girls at Parties">
+                    <div class="hover-overlay"></div>
+                    <div class="hover-2-content px-5 py-4">
+                        <h3 class="hover-2-title text-uppercase font-weight-bold mb-0">
+                            <span class="font-weight-light"></span>How to Talk to Girls at Parties
+                        </h3>
+                        <p class="hover-2-description mb-0"><i>John Mitchell</i>
+                            <br><i>(2017)</i>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+    <!-- footer start -->
+    <footer class="bg-dark text-center text-white">
+        <div class="container p-4 pb-0">
+            <section class="">
+                <form action="">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-auto">
+                            <p class="pt-2">
+                                <strong>Sign up for our newsletter</strong>
+                            </p>
+                        </div>
+                        <div class="col-md-5 col-12">
+                            <div class="form-outline form-white mb-4">
+                                <input type="email" id="form5Example29" class="form-control" />
+                                <label class="form-label" for="form5Example29">Email address</label>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-outline-light mb-4">
+                                Subscribe
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2021 Copyright
+            <!-- <a class="text-white" href="https://mdbootstrap.com/">MDBootstrap.com</a> -->
+        </div>
+    </footer>
+    <!-- footer end -->
+
+</body>
+</html>

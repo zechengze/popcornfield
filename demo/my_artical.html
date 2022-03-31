@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>討論區</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body,
+        input {
+            font-size: 14px;
+            line-height: 24px;
+            color: #333;
+            font-family: Microsoft yahei, Song, Arial, Helvetica, Tahoma, Geneva;
+        }
+
+        /* #content #post,
+        #comment p {
+            zoom: 1;
+        } */
+        #content #post:after,
+        #comment p:after {
+            display: block;
+            height: 0;
+            clear: both;
+            visibility: hidden;
+            overflow: hidden;
+            content: '.';
+        }
+
+        .transition {
+            -webkit-transition: all 0.5s linear;
+            -moz-transition: all 0.5s linear;
+            -o-transition: all 0.5s linear;
+            -ms-transition: all 0.5s linear;
+            transition: all 0.5s linear;
+        }
+
+        #content {
+            margin: 0 auto;
+            width: 960px;
+            overflow: hidden;
+        }
+
+        #content #post {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px #d4d4d4 dashed;
+            /* height: 556px; */
+            height: 200px;
+        }
+
+        #content #post textarea {
+            display: block;
+            margin-bottom: 10px;
+            padding: 5px;
+            width: 948px;
+            height: 100px;
+            border: 1px #d1d1d1 solid;
+            border-radius: 5px;
+            resize: none;
+            outline: none;
+        }
+
+        #content #post textarea:hover {
+            border: 1px #9bdf70 solid;
+            background: #f0fbeb;
+        }
+
+        #content #post #postBt,
+        #content #post #clearBt {
+            margin-left: 5px;
+            padding: 3px;
+            float: right;
+        }
+
+        #comment {
+            overflow: hidden;
+        }
+
+        #comment p {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        #comment p:nth-child(odd) {
+            border: 1px solid #e3e197;
+            background: #ffd;
+        }
+
+        #comment p:nth-child(even) {
+            border: 1px solid #adcd3c;
+            background: #f2fddb;
+        }
+
+        /*#comment p span{display:inline; float:left;}*/
+        #comment p .right {
+            text-align: right;
+            
+        }
+
+        #comment p .msg {
+            width: 738px;
+        }
+
+        #comment p .datetime {
+            width: 200px;
+            color: #999;
+            text-align: right;
+        }
+
+        /* ol.my_spacing{
+            text-indent: 10px;
+        } */
+        ol {
+            padding-left: 0;
+            list-style-position: inside;
+        }
+    </style>
+
+    <script type="text/javascript">
+        var named;
+        function delete1(id) {
+            localStorage.removeItem(id);
+            this.Storage.writeData();
+        }
+        function prom() {
+            var name = prompt("輸入帳號", "");    //將輸入的內容賦給變量 name ，
+            named = name;
+            //這里需要注意的是，prompt有兩個參數，前面是提示的話，后面是當對話框出來后，在對話框里的默認值
+
+            if (named) {     //如果返回的有內容
+                // alert("歡迎，" + name)
+                document.getElementById("shangtian").style.display = "none";
+                document.getElementById("ritian").value = named;
+            }
+            else {
+                document.getElementById("ritian").value = "匿名";
+            }
+        }
+        var Storage = {
+            saveData: function () {          //保存數據
+                var data = document.querySelector("#post textarea");
+                if (data.value != "") {
+                    var time = new Date().getTime() + Math.random() * 5;//getTime是Date對象中的方法，作用是返回 1970年01月01日至今的毫秒數
+                    if (named)
+                        localStorage.setItem(time, data.value + "|" + named + "|" + this.getDateTime());//將毫秒數存入Key值中，可以降低Key值重復率
+
+                    else
+                        localStorage.setItem(time, data.value + "|" + "匿名" + "|" + this.getDateTime());//將毫秒數存入Key值中，可以降低Key值重復率
+
+                    data.value = "";
+                    this.writeData();
+                }
+                else {
+                    alert("請留言！");
+                }
+            },
+            writeData: function ()//輸出數據
+            {
+                var dataHtml = "", data = "";
+                for (var i = localStorage.length - 1; i >= 0; i--) {
+                    data = localStorage.getItem(localStorage.key(i)).split("|");
+                    //dataHtml += "<p><span class=\"msg\">" + data[0] + "</span><span class=\"datetime\">" + data[1] + "</span><span>" + data[2]+"</span></p>";
+                    dataHtml += "<span style=>" + data[1] + "<span style=\"float:right\">" + data[2] + "</span><p><span class=\"msg\">" + data[0] + "<input style=\"float:right;border:none;border-radius:5px;background:red;color:white\" id=\"clearBt\" type=\"button\" onclick=\"delete1(" + localStorage.key(i) + ");\" value=\"檢舉\"/>" + "</span></p>";
+
+                }
+                document.getElementById("comment").innerHTML = dataHtml;
+            },
+            clearData: function () {
+                if (localStorage.length > 0) {
+                    if (window.confirm("確認清空？")) {
+                        localStorage.clear();
+                        this.writeData();
+                    }
+                }
+                else {
+                    alert("沒有需要清空的資料！");
+                }
+            },
+            getDateTime: function ()//2012-03-08 12:58:58
+            {
+                var isZero = function (num)//自動補零
+                {
+                    if (num < 10) {
+                        num = "0" + num;
+                    }
+                    return num;
+                }
+                var d = new Date();
+                return d.getFullYear() + "-" + isZero(d.getMonth() + 1) + "-" + isZero(d.getDate()) + " " + isZero(d.getHours()) + ":" + isZero(d.getMinutes()) + ":" + isZero(d.getSeconds());
+            }
+        }
+
+        window.onload = function () {
+            Storage.writeData();//當打開頁面的時候，先將localStorage中的數據輸出一邊，如果沒有數據，則輸出空
+            document.getElementById("postBt").onclick = function () { Storage.saveData(); }//發表評論按鈕添加點擊事件，作用是將localStorage中的數據輸出
+            document.getElementById("clearBt").onclick = function () { Storage.clearData(); }//清空所有已保存的數據
+        }
+    </script>
+</head>
+
+<body>
+    <!-- nav start -->
+
+    <!-- .navbar-expand-{sm|md|lg|xl}決定在哪個斷點以上就出現漢堡式選單 -->
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+        <a class="navbar-brand" href="index.html">
+            <!-- <img src="images/H-logo.svg" width="30" height="30" class="d-inline-block align-top" alt=""> -->
+            <span class="h3 mx-1">Popcorn Field</span>
+        </a>
+        <!-- .navbar-toggler 漢堡式選單按鈕 -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <!-- .navbar-toggler-icon 漢堡式選單Icon -->
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- .collapse.navbar-collapse 用於外層中斷點群組和隱藏導覽列內容 -->
+        <!-- 選單項目&漢堡式折疊選單 -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <!-- active表示當前頁面 -->
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">首頁<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">關於我們</a>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">電影類別</a>
+
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="#">上映中</a>
+                        <a class="dropdown-item" href="#">即將上映</a>
+                        <a class="dropdown-item" href="#">劇情</a>
+                        <a class="dropdown-item" href="#">動畫</a>
+                        <a class="dropdown-item" href="#">Cult Film</a>
+                    </div>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search
+                </button>
+            </form>
+        </div>
+    </nav>
+
+    <!-- nav end -->
+
+
+
+
+
+
+    <!-- artical start -->
+    <div class="container">
+
+        <nav>
+            <ol class="breadcrumb pl-0">
+                <li class="breadcrumb-item"><a href="#" class="text-heschool">電影</a></li>
+                <li class="breadcrumb-item"><a href="#" class="text-heschool">文章列表</a></li>
+                <li class="breadcrumb-item active" aria-current="page">新聞</li>
+            </ol>
+        </nav>
+
+        <h1 class="font-weight-bold">[情報] Indiwire 2021年度25大佳片</h1>
+        <div class="row">
+
+            <div class="col-md-9">
+                <div class="my-2 text-secondary">
+                    <small>
+                        <i class="fas fa-user"></i><span class="mr-2">culturesky (荒蕪中起舞)</span>
+                        <span mr-2="">Sat Dec 4 16:52:10 2021</span>
+                        <i class="fas fa-tag"></i><span class="text-heschool">event</span>
+                    </small>
+                </div>
+
+                <article>
+                    <h6>知名影評媒體 IndieWire 公布了
+                        <a href="https://www.indiewire.com/gallery/best-movies-of-the-year-2021/" target="_blank"
+                            rel="noreferrer noopener nofollow">25大佳片</a>
+                    </h6>
+                    <ol class="my_spacing">
+                        <li>《犬山記》│Jane Campion (Netflix已上架)</li>
+                        <li>《甘草披薩》│Paul Thomas Anderson</li>
+                        <li>《在車上》│濱口竜介 (預計2022年上映 東昊發行)</li>
+                        <li>《漂浪人生》｜Jonas Poher Rasmussen(預計2022年上好威發行)</li>
+                        <li>《鈦》│Julia Ducournau (12/30上映 光年映畫發行)</li>
+                        <br>
+                        <li>《靈魂樂之夏》│Ahmir Khalib Thompson (2021金馬影展已映)</li>
+                        <li>《記憶》│阿比查邦．韋拉斯塔古 (預計2022年上映 傳影發行)</li>
+                        <li>《算牌手》│Paul Schrader (已上映 双喜發行)</li>
+                        <li>《綠騎士》│David Lowery (已上映OTT平台可觀看)</li>
+                        <li>《平行母親》│ Pedro Almodóvar(預計2022年上映 傳影發行)</li>
+                        <br>
+                        <li>《Bergman Island》│Mia Hansen-Løve(預計2022年上映 東昊發行)</li>
+                        <li>《白色通行證》│Rebecca Hall (Netflix已上架)</li>
+                        <li>《樂動心旋律》│Sian Heder</li>
+                        <li>《紅色火箭》│Sean Baker(未知 台灣為UIP代理發行)</li>
+                        <li>《同行：一場戲劇治療歷程》│Robert Greene (Netflix已上架)</li>
+                        <br>
+                        <li>《The Worst Person in the World》│Joachim Trier (預計2022年上映 好威映象發行)</li>
+                        <li>《失去的女兒》│Maggie Gyllenhaal (Netflix 12/31上架)</li>
+                        <li>《豬殺令》│Michael Sarnoski (已上映 車庫發行)</li>
+                        <li>《狂野48小時》│Janicza Bravo (OTT平台可觀看)</li>
+                        <li>《無邪》│Mohammad Rasoulof (已上映 OTT平台可觀看)</li>
+                        <br>
+                        <li>《我們的相愛時光：續篇》│Joanna Hogg (2021金馬影展已映)</li>
+                        <li>《西城故事》│Steven Spielberg(預計2022年上映 20th Century Studios發行)</li>
+                        <li>《史賓賽》│Pablo Larraín (已上映 車庫發行)</li>
+                        <li>《倒楣性愛和瘋狂A片》│Radu Jude (已上映 海鵬發行)</li>
+                        <li>《Test Pattern》│ Shatara Michelle Ford</li>
+                    </ol>
+                    <p>抱歉 推爆 《陽光普照》的是Variety才對</p>
+                    <p>--</p>
+                    <span class="f2">※ 發信站: 批踢踢實業坊(ptt.cc), 來自: 123.193.74.204 (臺灣)
+                    </span>
+                    
+                </article>
+
+            </div>
+
+            <div class="col-md-3">
+                <h2 class="text-secondary">Tags</h2>
+                <a href="#" class="badge badge-info"><i class="fas fa-tag"></i>甘草披薩</a>
+                <a href="#" class="badge badge-info"><i class="fas fa-tag"></i>鈦</a>
+                <a href="#" class="badge badge-info"><i class="fas fa-tag"></i>史賓賽</a>
+                <a href="#" class="badge badge-info"><i class="fas fa-tag"></i>白色通行證</a>
+                <a href="#" class="badge badge-info"><i class="fas fa-tag"></i>Netflix</a>
+                <a href="#" class="badge badge-info"><i class="fas fa-tag"></i>2021金馬影展</a>
+                <a href="#" class="badge badge-info"><i class="fas fa-tag"></i>靈魂樂之夏</a>
+
+                <!-- <img src="/pic/artical/p_of_dog.jpeg" alt=""> -->
+            </div>
+        </div>
+
+        <hr>
+
+        <div id="content">
+            <div id="post">
+                <div style="background:#5d8aa8 ;height:30px;">
+                    名稱：<input type="submit" id="shangtian" name="Submit3"
+                        style="border:none; background-color:#5d8aa8; color:white;" value="點擊切換帳號" onclick="prom()" />
+                    <input type="text" id="ritian" style="border:none; background-color:#5d8aa8; color:white;"
+                        onclick="prom()" />
+
+                </div>
+                <div>
+                    <textarea class="transition"></textarea>
+                </div>
+                <input id="postBt" type="button"
+                    style="border:none; background-color:#5d8aa8; color:white;border-radius:5px; width:80px; height:30px;"
+                    value="留言" />
+                <input id="clearBt" type="button"
+                    style="border:none; background-color:#5d8aa8; color:white;border-radius:5px; width:80px; height:30px;"
+                    value="清空" />
+            </div>
+            <div id="comment"></div>
+        </div>
+
+    </div>
+
+
+
+    <!-- artical end -->
+
+
+
+    <!-- footer start -->
+    <footer class="bg-dark text-center text-white">
+        <!-- Grid container -->
+        <div class="container p-4 pb-0">
+            <!-- Section: Form -->
+            <section class="">
+                <form action="">
+                    <!--Grid row-->
+                    <div class="row d-flex justify-content-center">
+                        <!--Grid column-->
+                        <div class="col-auto">
+                            <p class="pt-2">
+                                <strong>Sign up for our newsletter</strong>
+                            </p>
+                        </div>
+                        <!--Grid column-->
+
+                        <!--Grid column-->
+                        <div class="col-md-5 col-12">
+                            <!-- Email input -->
+                            <div class="form-outline form-white mb-4">
+                                <input type="email" id="form5Example29" class="form-control" />
+                                <label class="form-label" for="form5Example29">Email address</label>
+                            </div>
+                        </div>
+                        <!--Grid column-->
+
+                        <!--Grid column-->
+                        <div class="col-auto">
+                            <!-- Submit button -->
+                            <button type="submit" class="btn btn-outline-light mb-4">
+                                Subscribe
+                            </button>
+                        </div>
+                        <!--Grid column-->
+                    </div>
+                    <!--Grid row-->
+                </form>
+            </section>
+            <!-- Section: Form -->
+        </div>
+        <!-- Grid container -->
+
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2021 Copyright
+            <!-- <a class="text-white" href="https://mdbootstrap.com/">MDBootstrap.com</a> -->
+        </div>
+        <!-- Copyright -->
+    </footer>
+    <!-- footer end -->
+</body>
+
+</html>

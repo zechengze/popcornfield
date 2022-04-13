@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Suez+One&display=swap");
 /* @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap"); */
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&display=swap");
 
 /* Border-box */
 html {
@@ -27,6 +28,7 @@ footer {
   padding: 0 6%;
 }
 @media (min-width: 800px) {
+  nav,
   title-container,
   .content-container,
   .about-container,
@@ -40,6 +42,7 @@ h1,
 h2,
 h3,
 p,
+li,
 button {
   font-family: "Raleway", sans-serif;
   font-style: normal;
@@ -51,6 +54,8 @@ h1,
 h2,
 h3,
 p,
+ul,
+li,
 button {
   margin: 0;
   padding: 0;
@@ -71,14 +76,60 @@ h2 {
   font-weight: 400;
 }
 
+/* nav */
+
+nav {
+  padding: 0 7%;
+  width: 100%;
+  border-bottom: 1px solid black;
+}
+
+ul {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  line-height: 80px;
+}
+
 h1.logo-name {
   letter-spacing: -4px;
+  padding-right: 3%;
 }
+
+li {
+  list-style: none;
+  font-size: 25px;
+  padding: 0 3%;
+  border-left: 1px solid black;
+}
+
+.nav-search {
+  font-family: "Open Sans", sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+li .nav-social {
+  transform: translate(0px, 7px);
+}
+
+ul li.nav-hover:hover {
+  background: #000;
+  color: white;
+}
+
+/* title */
+
 .title-name {
   letter-spacing: 1rem;
 }
 
+.title-container .title-name {
+  margin-top: 50px;
+}
+
 /* content */
+
 .content-container {
   display: flex;
   flex-wrap: wrap;
@@ -89,14 +140,14 @@ h1.logo-name {
 .content-container .pic-box {
   /* background: orange; */
   width: 402px;
-  height: 500px;
+  height: 550px;
   margin: 50px 0;
   border: 1px solid black;
 }
 
 .content-container .pic-box .img-overflow {
   width: 400px;
-  height: 200px;
+  height: 250px;
   overflow: hidden;
 }
 
@@ -111,10 +162,15 @@ h1.logo-name {
 .content-container .pic-box .movie-review h2 {
   text-align: left;
 }
-.content-container .pic-box .movie-review .artical-view {
-  position: absolute;
-  bottom: 0;
-  /* border-top: 1px solid gray; */
+
+.view-count {
+  display: inline-block;
+  transform: translate(2px, -4.5px);
+}
+
+.border-line {
+  border-bottom: 1px solid gray;
+  margin: 20px 0px;
 }
 
 /* .movie-name {
@@ -139,39 +195,45 @@ h1.logo-name {
 /* about */
 
 .about-container {
-  /* position: relative; */
-  /* width: 100%; */
+  transform: translate(0px, 50px);
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
+}
 
-  padding-bottom: 60px;
-  transform: translate(0px, 300px);
-  background: yellowgreen;
+.about-container .title-name {
+  margin: 50px 0;
 }
 
 .about-content {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  padding: 0%;
-  margin-top: 50px;
+  padding: 0 10%;
+  margin-bottom: 130px;
 }
 
 .about-container .about-content .about-pic {
   width: 480px;
   height: 400px;
+  border: 1px solid black;
   background-image: url("../pic/Trainspotting/adaymag-trainspotting-25-irvin-welsh-03.jpg");
   background-size: cover;
   background-position: center;
 }
+
 .about-container .about-content .about-text {
   width: 480px;
   height: 400px;
-  /* text-align: left; */
+  padding: 30px;
+  border: 1px solid black;
 }
+
 .about-container .about-content .about-text h3 {
   text-align: left;
   margin-bottom: 1rem;
   font-weight: 800;
 }
+
 .about-container .about-content .about-text p {
   text-align: left;
 }
@@ -181,16 +243,16 @@ h1.logo-name {
 .contact {
   position: relative;
   width: 100%;
-  /* padding-top: 20px; */
   padding-bottom: 60px;
   background-color: #1e1e1e;
-  transform: translate(0px, 500px);
+  transform: translate(0px, 50px);
 }
 @media (min-width: 800px) {
   .contact {
     padding-top: 60px;
   }
 }
+
 .contact .title-name {
   color: white;
 }
@@ -211,13 +273,14 @@ h1.logo-name {
     flex-shrink: 0;
   }
 }
+
 .contact > .groupUnitContact .unitContact {
   position: relative;
   width: 100%;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  margin-top: 30px;
+  /* margin-top: 30px; */
 }
 @media (min-width: 800px) {
   .contact > .groupUnitContact .unitContact {
@@ -231,6 +294,7 @@ h1.logo-name {
     text-align: left;
   }
 }
+
 .contact > .groupUnitContact .unitContact > * {
   flex-shrink: 0;
   width: 100%;
@@ -247,43 +311,12 @@ h1.logo-name {
 .contact > .groupUnitContact .unitContact > p > span:first-of-type {
   margin-top: 16px;
 }
-@media (min-width: 800px) {
-  .contact > .groupUnitContact .absolute2Bottom-lg {
-    position: absolute;
-    width: 100%;
-    bottom: 0;
-    left: 0;
-    display: flex;
-  }
-  .contact > .groupUnitContact .absolute2Bottom-lg > * {
-    flex-shrink: 0;
-  }
-}
-@media (min-width: 800px) {
-  .contact > .groupUnitContact .button {
-    justify-content: flex-start;
-  }
-}
-.contact > .groupUnitContact .button > button {
-  width: 230px;
-  color: #1e1e1e;
-  background-color: #fff5ec;
-  margin-top: 20px;
-}
-@media (min-width: 800px) {
-  .contact > .groupUnitContact .button > button {
-    width: 160px;
-  }
-}
+
 .contact > .contactUs {
   margin-top: 30px;
 }
 @media (min-width: 800px) {
   .contact > .contactUs {
-    position: absolute;
-    z-index: 2;
-    right: 6%;
-    top: 160px;
     min-width: 300px;
     width: 30%;
     max-width: 400px;
@@ -294,6 +327,7 @@ h1.logo-name {
     flex-shrink: 0;
   }
 }
+
 .contact > .contactUs h3 {
   width: 100%;
   color: #fff5ec;
@@ -303,6 +337,7 @@ h1.logo-name {
     text-align: left;
   }
 }
+
 .contact > .contactUs p {
   color: #fff5ec;
   text-align: center;
@@ -312,10 +347,12 @@ h1.logo-name {
     text-align: left;
   }
 }
+
 .contact > .contactUs .mustFilled::after {
   content: "*";
   margin-left: 4px;
 }
+
 .contact > .contactUs button {
   border-color: #fff5ec;
   border-width: 1px;
@@ -323,6 +360,7 @@ h1.logo-name {
   color: #fff5ec;
   background-color: #d0362c;
 }
+
 .contact > .contactUs > label {
   display: inline-block;
   width: 100%;
@@ -333,6 +371,7 @@ h1.logo-name {
     width: 48%;
   }
 }
+
 .contact > .contactUs > label > input {
   display: inline-block;
   margin-top: 6px;
@@ -345,6 +384,7 @@ h1.logo-name {
   color: #fff5ec;
   padding: 16px;
 }
+
 .contact > .contactUs > label > .inputMessage {
   height: 160px;
 }
@@ -353,6 +393,7 @@ h1.logo-name {
     height: 30px;
   }
 }
+
 @media (min-width: 800px) {
   .contact > .contactUs > .message {
     width: 100%;
@@ -363,14 +404,19 @@ h1.logo-name {
   height: 50px;
   max-width: none;
 }
+
 .contact > .contactUs > label:last-of-type > input {
   border-bottom: none;
 }
+
 @media (min-width: 800px) {
   .contact > .contactUs > label:nth-of-type(even):not(.message) {
     margin-left: 4%;
   }
 }
+
+/* footer */
+
 footer {
   width: 100%;
   padding-top: 20px;
@@ -378,12 +424,10 @@ footer {
   background-color: #d0362c;
   display: flex;
   justify-content: center;
-  transform: translate(0px, 500px);
+  transform: translate(0px, 50px);
 }
-
 @media (min-width: 800px) {
   footer {
-    padding-top: 60px;
-    padding-bottom: 60px;
+    padding: 30px 0;
   }
 }

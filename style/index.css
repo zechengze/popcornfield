@@ -144,6 +144,11 @@ ul div.nav-ham svg {
 .title-container .title-name {
   margin-top: 50px;
 }
+@media (max-width: 800px) {
+  .title-container .title-name {
+    margin-top: 20px;
+  }
+}
 
 /* content */
 
@@ -155,14 +160,22 @@ ul div.nav-ham svg {
 }
 
 .content-container .pic-box {
-  width: 402px;
+  width: 350px;
   height: 550px;
   margin: 50px 0;
   border: 1px solid black;
 }
+@media (max-width: 800px) {
+  .content-container .pic-box {
+    width: 350px;
+    height: 550px;
+    margin: 20px 0;
+    border: 1px solid black;
+  }
+}
 
 .content-container .pic-box .img-overflow {
-  width: 400px;
+  width: 348px;
   height: 250px;
   overflow: hidden;
 }
@@ -172,7 +185,7 @@ ul div.nav-ham svg {
 }
 
 .content-container .pic-box .movie-review {
-  padding: 20px;
+  padding: 15px;
 }
 .content-container .pic-box .movie-review p,
 .content-container .pic-box .movie-review h2 {
@@ -196,6 +209,12 @@ ul div.nav-ham svg {
   border-bottom: 1px solid #80808080;
   margin: 20px 0px;
 }
+@media (max-width: 800px) {
+  .border-line {
+    border-bottom: 1px solid #80808080;
+    margin: 20px 0px;
+  }
+}
 
 /* about */
 
@@ -215,8 +234,18 @@ ul div.nav-ham svg {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  padding: 0 10%;
-  margin-bottom: 130px;
+  padding: 0;
+  /* margin-bottom: 30px; */
+  /* border: 1px solid white; */
+}
+@media (min-width: 800px) {
+  .about-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 0 10%;
+    margin-bottom: 130px;
+  }
 }
 
 .about-container .about-content .about-pic {
@@ -233,6 +262,19 @@ ul div.nav-ham svg {
   height: 400px;
   padding: 30px;
   border: 1px solid white;
+}
+
+@media (max-width: 800px) {
+  .about-container .about-content .about-pic {
+    border: none;
+    width: 100%;
+  }
+  .about-container .about-content .about-text {
+    border: none;
+    width: 100%;
+    padding: 0%;
+    margin-top: 20px;
+  }
 }
 
 .about-container .about-content .about-text h3 {

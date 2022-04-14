@@ -13,9 +13,7 @@ lorem
 
 * HTML
   
-* Sass/SCSS
-
-  使用Sass開發
+* CSS
 
 * Normalize.css
 
